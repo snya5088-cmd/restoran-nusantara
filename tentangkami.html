@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang Kami - Restoran Nusantara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ====== DASAR ====== */
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #05060a, #0d1320);
+      color: #e6eef8;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ====== HEADER ====== */
+    header {
+      background: linear-gradient(90deg, #ffb84d, #ff8a4d);
+      color: #111;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(1.2em, 2.5vw, 1.8em);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #111;
+      text-decoration: none;
+      margin: 5px 12px;
+      font-weight: 600;
+      transition: opacity 0.3s;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    nav a:hover {
+      opacity: 0.7;
+    }
+
+    /* ====== BANNER ====== */
+    .banner {
+      position: relative;
+      background: url('images/Nusantara.png') center/cover no-repeat;
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+
+    .banner h2 {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(2em, 6vw, 3em);
+      color: #ffb84d;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+      animation: fadeInDown 1.5s ease-out;
+    }
+
+    /* ====== KONTEN ====== */
+    main {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    h3 {
+      color: #ffb84d;
+      border-left: 4px solid #ff8a4d;
+      padding-left: 10px;
+      font-size: clamp(1.2em, 3vw, 1.5em);
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #cfd8e3;
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      margin-left: 25px;
+      color: #dbe7f5;
+    }
+
+    /* ====== TIM ====== */
+    .team-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .team-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      text-align: center;
+      padding: 25px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .team-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease;
+    }
+
+    .team-card:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-5px);
+    }
+
+    .team-card img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid #ffb84d;
+      margin-bottom: 12px;
+    }
+
+    /* ====== INFO BOX ====== */
+    .info-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 25px 20px;
+      margin-top: 35px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .info-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease;
+    }
+
+    .info-box h4 {
+      color: #ffb84d;
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+
+    .info-box table {
+      width: 100%;
+      color: #cfd8e3;
+      border-collapse: collapse;
+      margin: 0 auto;
+      max-width: 500px;
+      font-size: 0.95rem;
+    }
+
+    .info-box td {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-box td:first-child {
+      text-align: left;
+    }
+
+    .info-box td:last-child {
+      text-align: right;
+    }
+
+    /* ====== TOMBOL KONTAK ====== */
+    .contact-link {
+      display: inline-block;
+      background: linear-gradient(90deg,#ffb84d,#ff8a4d);
+      color: #111;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 35px;
+      transition: transform 0.2s ease, opacity 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+      font-size: 0.95rem;
+    }
+
+    .contact-link.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease;
+    }
+
+    .contact-link:hover {
+      transform: scale(1.05);
+      opacity: 0.85;
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      text-align: center;
+      background: #0a101d;
+      color: #9aa7b8;
+      padding: 25px 10px;
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ====== ANIMASI ====== */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: all 1s ease;
+    }
+
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      .banner {
+        height: 40vh;
+      }
+
+      main {
+        margin: 40px auto;
+        padding: 0 15px;
+      }
+
+      .team-card img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .info-box table {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .banner h2 {
+        font-size: 2em;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      .contact-link {
+        width: 90%;
+        padding: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🍽 Restoran Nusantara</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="Menu.html">Menu</a>
+      <a href="Pesanan.html">Pesanan</a>
+      <a href="TentangKami.html">Tentang Kami</a>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <h2>Tentang Kami</h2>
+  </section>
+
+  <main>
+    <section class="fade-section">
+      <h3>Selamat Datang di Restoran Nusantara</h3>
+      <p>
+        <b>Restoran Nusantara</b> berdiri sebagai simbol kekayaan cita rasa Indonesia yang tak lekang oleh waktu.
+        Sejak tahun 2005, kami mempersembahkan beragam hidangan otentik dari Sabang hingga Merauke —
+        menghadirkan kehangatan, kelezatan, dan kebersamaan dalam setiap suapan.
+      </p>
+      <p>
+        Kami percaya bahwa makanan adalah bahasa universal yang menyatukan.
+        Semua sajian kami dibuat dari bahan-bahan segar pilihan, diolah langsung oleh para koki berpengalaman.
+        Kini, Anda dapat menikmati cita rasa Nusantara dari mana saja melalui layanan online kami.
+      </p>
+    </section>
+
+    <section class="fade-section">
+      <h3>Visi & Misi Kami</h3>
+      <p><b>Visi:</b> Menjadi pelopor kuliner Nusantara modern yang menginspirasi dunia.</p>
+      <p><b>Misi:</b></p>
+      <ul>
+        <li>Menjaga cita rasa tradisional dengan kualitas tinggi.</li>
+        <li>Menghadirkan pelayanan yang cepat, ramah, dan berintegritas.</li>
+        <li>Berinovasi dengan layanan digital dan ramah lingkungan.</li>
+        <li>Mendukung ekonomi lokal bersama produsen dalam negeri.</li>
+      </ul>
+    </section>
+
+    <section class="fade-section">
+      <h3>Jam Operasional</h3>
+      <div class="info-box">
+        <h4>🕓 Waktu Layanan Restoran Nusantara</h4>
+        <table>
+          <tr><td>Senin - Jumat</td><td>09:00 - 22:00 WIB</td></tr>
+          <tr><td>Sabtu</td><td>10:00 - 23:00 WIB</td></tr>
+          <tr><td>Minggu</td><td>10:00 - 21:00 WIB</td></tr>
+          <tr><td>Hari Libur Nasional</td><td>09:00 - 20:00 WIB</td></tr>
+        </table>
+        <p style="margin-top:15px;">
+          Kami siap melayani pesanan Anda setiap hari. Untuk pesanan di luar jam operasional,
+          silakan hubungi kami melalui WhatsApp untuk pengaturan khusus.
+        </p>
+      </div>
+    </section>
+
+    <section class="fade-section">
+      <h3>Alamat Kami</h3>
+      <div class="info-box">
+        <h4>📍 Lokasi Restoran</h4>
+        <p>
+          Jl. Cikanyere, Kecamatan Nagrak, Kota Sukabumi, Nagrak 43352  
+          <br>📞 087865992731
+          <br>📧 <a href="mailto:info@restorannusantara.com" style="color:#ffb84d;">info@restorannusantara.com</a>
+        </p>
+        <a href="https://goo.gl/maps/x" target="_blank" class="contact-link">📍 Lihat di Google Maps</a>
+      </div>
+    </section>
+
+    <section class="fade-section">
+      <h3>Fasilitas Kami</h3>
+      <div class="info-box">
+        <h4>✨ Fasilitas yang Kami Sediakan</h4>
+        <ul style="text-align:left; max-width:500px; margin:0 auto;">
+          <li>Tempat makan ber-AC dengan nuansa khas Nusantara</li>
+          <li>Ruang VIP untuk acara keluarga atau bisnis</li>
+          <li>Area parkir luas dan aman</li>
+          <li>Wi-Fi gratis untuk pelanggan</li>
+          <li>Layanan pesan antar cepat</li>
+          <li>Pembayaran digital via QRIS, debit, dan e-wallet</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="fade-section">
+      <h3>Tim Kami</h3>
+      <div class="team-section">
+        <div class="team-card">
+          <img src="images/Chef.png" alt="Chef Utama">
+          <h4>Chef Budi Santoso</h4>
+          <p>Head Chef & Inovator Menu</p>
+        </div>
+        <div class="team-card">
+          <img src="images/Manager.png" alt="Manager">
+          <h4>Andi Pratama</h4>
+          <p>Manajer Operasional</p>
+        </div>
+        <div class="team-card">
+          <img src="images/Service.png" alt="Customer Service">
+          <h4>Rina Wulandari</h4>
+          <p>Customer Support & Delivery</p>
+        </div>
+      </div>
+    </section>
+
+    <div style="text-align:center;">
+      <a href="https://wa.me/087865992731" target="_blank" class="contact-link">
+        💬 Hubungi Kami via WhatsApp
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Restoran Nusantara - Online Service • Cita Rasa Nusantara Dalam Genggaman
+  </footer>
+
+  <script>
+    // Animasi fade saat scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-section, .team-card, .contact-link, .info-box')
+      .forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

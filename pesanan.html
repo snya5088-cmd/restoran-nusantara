@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🧾 Keranjang Pesanan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05060a;
+      --panel: #0d1320;
+      --muted: #9aa7b8;
+      --accent: linear-gradient(90deg, #ffb84d, #ff8a4d);
+      --accent-solid: #ffb84d;
+      --text: #e6eef8;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      background: linear-gradient(180deg, var(--bg), #0d1320);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    header {
+      background: var(--accent);
+      color: #111;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    header h1 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    /* Navigasi */
+    nav {
+      text-align: center;
+      margin-top: 15px;
+    }
+    nav a {
+      color: #ffb84d;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 8px;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #ffd27f;
+    }
+
+    /* Container utama */
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: linear-gradient(180deg,#091425,#021022);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Kartu pesanan */
+    .order-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 0;
+      transition: 0.3s;
+    }
+    .order-card:hover {
+      transform: translateY(-3px);
+    }
+    .order-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .order-info {
+      flex: 1;
+    }
+    .order-info h3 {
+      margin: 0 0 5px;
+      color: #fff;
+      font-size: 1rem;
+    }
+    .order-info p {
+      margin: 2px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Tombol */
+    .btn {
+      background: var(--accent);
+      border: none;
+      color: #111;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    /* Bagian kosong */
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 50px 0;
+      font-size: 1rem;
+    }
+
+    /* Tombol lanjut */
+    .checkout {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .checkout .btn {
+      font-size: 1rem;
+      padding: 10px 18px;
+    }
+
+    /* Responsif untuk HP */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .order-card img {
+        width: 100%;
+        height: auto;
+      }
+      .order-info {
+        width: 100%;
+      }
+      .container {
+        margin: 15px;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧾 Keranjang Pesanan</h1>
+  </header>
+
+  <!-- 🔗 Navigasi antar halaman -->
+  <nav>
+    <a href="index.html">Beranda</a> |
+    <a href="tentangkami.html">Tentang Kami</a> |
+    <a href="menu.html">Menu</a> |
+    <a href="pembayaran.html">Pembayaran</a>
+  </nav>
+
+  <main class="container">
+    <section id="keranjangList"></section>
+  </main>
+
+  <script>
+    const keranjang = JSON.parse(localStorage.getItem('keranjang')) || [];
+    const container = document.getElementById('keranjangList');
+
+    if (keranjang.length > 0) {
+      container.innerHTML = keranjang.map((item, index) => `
+        <div class="order-card">
+          <img src="${item.img}" alt="${item.title}">
+          <div class="order-info">
+            <h3>${item.title}</h3>
+            <p><b>Asal:</b> ${item.area}</p>
+            <p><b>Kategori:</b> ${item.type}</p>
+            <p><b>Harga:</b> ${item.price}</p>
+            <button class="btn" onclick="hapusItem(${index})">🗑️ Hapus</button>
+          </div>
+        </div>
+      `).join('') + `
+        <div class="checkout">
+          <button class="btn" onclick="window.location.href='pembayaran.html'">💳 Lanjut ke Pembayaran</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = '<p class="empty">Belum ada item di keranjang.</p>';
+    }
+
+    function hapusItem(index) {
+      keranjang.splice(index, 1);
+      localStorage.setItem('keranjang', JSON.stringify(keranjang));
+      location.reload();
+    }
+  </script>
+</body>
+</html>
